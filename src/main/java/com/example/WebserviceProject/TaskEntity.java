@@ -3,8 +3,8 @@ package com.example.WebserviceProject;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "task")
-public class Task {
+@Table(name = "tasks")
+public class TaskEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -15,29 +15,29 @@ public class TaskController {
     @Autowired
     private TaskRepository taskRepository;
     @GetMapping
-    public List<Task> getAllTasks() {
+    public List<TaskEntity> getAllTasks() {
         return taskRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
-        Optional<Task> task = taskRepository.findById(id);
+    public ResponseEntity<TaskEntity> getTaskById(@PathVariable Long id) {
+        Optional<TaskEntity> task = taskRepository.findById(id);
         return task.map(ResponseEntity::ok).orElseGet(() ->ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
-        Task createdTask = taskRepository.save(task);
+    public ResponseEntity<TaskEntity> createTask(@RequestBody TaskEntity task) {
+        TaskEntity createdTask = taskRepository.save(task);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
 
     }
    @PreAuthorize("hasRole('USER')")
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
-        Optional<Task> existingTask = taskRepository.findById(id);
+    public ResponseEntity<TaskEntity> updateTask(@PathVariable Long id, @RequestBody TaskEntity updatedTask) {
+        Optional<TaskEntity> existingTask = taskRepository.findById(id);
 
         if (existingTask.isPresent()) {
-            Task task = existingTask.get();
+            TaskEntity task = existingTask.get();
             task.setTask(updatedTask.getTask());
             task.setAssignedTo(updatedTask.getAssignedTo());
             taskRepository.save(task);
