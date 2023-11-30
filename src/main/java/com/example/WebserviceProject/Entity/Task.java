@@ -21,6 +21,8 @@ public class Task {
         this.assignedTo = assignedTo;
     }
 
+    public Task() {
+    }
 
     public User getUser() {
         return this.user;
