@@ -1,16 +1,34 @@
-package com.example.WebserviceProject;
+package com.example.WebserviceProject.Entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "tasks")
-public class TaskEntity {
+//@Table(name = "task")
+public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String task;
     private String assignedTo;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Task(String task, String assignedTo) {
+        this.task = task;
+        this.assignedTo = assignedTo;
+    }
+
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Long getId() {
         return id;
@@ -35,4 +53,5 @@ public class TaskEntity {
     public void setAssignedTo(String assignedTo) {
         this.assignedTo = assignedTo;
     }
+
 }
