@@ -24,7 +24,7 @@ Follow these steps to install and run the project locally:
 * Use the default credentials or update them as needed.
 * Use the provided registration API endpoint to create a new User.
 * Once registered or logged in, you can now test the various API endpoints.
-* Encure that you inklude the necessary authentication, such as a JWT token, when making requests.
+* Encure that you include the necessary authentication, such as a JWT token, when making requests.
 ## Technologies and Framework
 * Spring Boot
 * Spring Data JPA
