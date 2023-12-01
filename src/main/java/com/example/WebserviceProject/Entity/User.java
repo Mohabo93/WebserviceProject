@@ -20,10 +20,10 @@ public class User implements UserDetails {
     private String username;
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
-            name = "user_role_junction",
-            joinColumns = {@JoinColumn(name = "user_id")},
+            name="user_role_junction",
+            joinColumns = {@JoinColumn(name="user_id")},
             inverseJoinColumns = {@JoinColumn(name="role_id")}
     )
     private Set<Role> authorities;
@@ -45,7 +45,7 @@ public class User implements UserDetails {
         return this.userId;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer userId) {
         this.userId = userId;
     }
 

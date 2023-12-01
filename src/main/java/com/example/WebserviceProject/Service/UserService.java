@@ -75,7 +75,7 @@ public class UserService implements UserDetailsService {
     public Optional <Task> getTaskById(Long id) {
         return taskRepository.findById(id);
     }
-    public List<Task> getAllTasks() {
+    public List<Task> getAll() {
         return taskRepository.findAll();
     }
 

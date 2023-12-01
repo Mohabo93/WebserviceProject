@@ -47,7 +47,7 @@ public class AuthenticationService {
         return userRepository.save(new User(0, username, encodedPassword, authorities));
     }
 
-    public LoginResponseDTO loginUser(String username, String password) {
+    public LoginResponseDTO loginUser(String username, String password){
 
         try{
 
@@ -60,6 +60,7 @@ public class AuthenticationService {
             return new LoginResponseDTO(userRepository.findByUsername(username).get(), token);
 
         } catch(AuthenticationException e){
+
             return new LoginResponseDTO(null, "");
         }
     }

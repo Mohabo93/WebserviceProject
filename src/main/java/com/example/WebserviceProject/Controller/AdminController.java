@@ -1,6 +1,7 @@
 package com.example.WebserviceProject.Controller;
 
 
+import com.example.WebserviceProject.Entity.Task;
 import com.example.WebserviceProject.Entity.User;
 import com.example.WebserviceProject.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/admin")
-@CrossOrigin
+@CrossOrigin("*")
 public class AdminController {
 
     @Autowired
@@ -44,5 +47,25 @@ public class AdminController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("ERROR: " + e.getMessage());
         }
+    }
+
+    @PutMapping("/task/{id}")
+    public ResponseEntity <Task> updateTask(@PathVariable Long id, @RequestBody String updatedTask) {
+        Optional<Task> existingTask = userService.getTaskById(id);
+
+        if (existingTask.isPresent()) {
+            existingTask.get().setTask(updatedTask);
+            Task updated = userService.updateAssignedTo(existingTask.get());
+
+            return new ResponseEntity<>(updated, HttpStatus.OK);
+        }else return ResponseEntity.notFound().build();
+    }
+    @DeleteMapping("/task/{id}")
+    public ResponseEntity<String> deleteTask(@PathVariable Long id) {
+        Optional <Task> deleteTask = userService.getTaskById(id);
+        if (deleteTask.isPresent()){
+            userService.deleteTask(id);
+            return new ResponseEntity<>("Task raderad", HttpStatus.OK);
+        } return new ResponseEntity<>("Task hittades inte", HttpStatus.BAD_REQUEST);
     }
 }
