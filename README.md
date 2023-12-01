@@ -17,9 +17,14 @@ Follow these steps to install and run the project locally:
 * The application will be accessible at http://localhost:8080.
 ### 5. Test the API
 * You can use tools like Postman to test the various API endpoints. The API is protected with OAuth2 authentication, so you need to generate a JWT token to make requests.
-## User Credentials
-* To log in on the system, use the username and password in the WebserviceProjectApplication-class or change to the username and password to the required. 
-* When registred you can now test the API endpoints.
+## User Authentication
+* To log in on the system, follow these steps: 
+* Open the 'WebserviceProjectApplication'-class.
+* Find the default username and password provided in the class.
+* Use the default credentials or update them as needed.
+* Use the provided registration API endpoint to create a new User.
+* Once registered or logged in, you can now test the various API endpoints.
+* Encure that you inklude the necessary authentication, such as a JWT token, when making requests.
 ## Technologies and Framework
 * Spring Boot
 * Spring Data JPA
