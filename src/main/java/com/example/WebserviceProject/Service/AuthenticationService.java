@@ -22,45 +22,41 @@ import java.util.Set;
 public class AuthenticationService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository userRepository; //Injicering av UserRepository för att utföra operationer mot användaruppgifter
 
     @Autowired
-    private RoleRepository roleRepository;
+    private RoleRepository roleRepository; //Injicering av RoleRepository för att hantera användarroller
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder; //Injicering av PasswordEncoder för att koda och dekoda lösenord
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager; //Injicering av AuthenticationManager för att hantera autentisering
 
     @Autowired
-    private TokenService tokenService;
+    private TokenService tokenService; //Injicering av TokenService för att generera JWT-tokens
 
+    // Registrerar en ny användare
     public User registerUser(String username, String password) {
         String encodedPassword = passwordEncoder.encode(password);
-
         Role userRole = roleRepository.findByAuthority("USER").orElseThrow();
 
         Set<Role>  authorities = new HashSet<>();
         authorities.add(userRole);
-
         return userRepository.save(new User(0, username, encodedPassword, authorities));
     }
 
+    // Loggar in en användare och genererar en JWT-token
     public LoginResponseDTO loginUser(String username, String password){
 
         try{
-
             Authentication auth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username, password)
-            );
+                    new UsernamePasswordAuthenticationToken(username, password));
 
             String token = tokenService.generateJwt(auth);
-
             return new LoginResponseDTO(userRepository.findByUsername(username).get(), token);
 
         } catch(AuthenticationException e){
-
             return new LoginResponseDTO(null, "");
         }
     }

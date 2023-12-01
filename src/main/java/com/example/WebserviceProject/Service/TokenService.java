@@ -16,19 +16,22 @@ import java.util.stream.Collectors;
 public class TokenService {
 
     @Autowired
-    private JwtEncoder jwtEncoder;
+    private JwtEncoder jwtEncoder; // Injicering av JwtEncoder för kodning av JWT
 
     @Autowired
-    private JwtDecoder jwtDecoder;
+    private JwtDecoder jwtDecoder; // Injicering av JwtEncoder för avkodning av JWT
 
+    // Genererar en JWT baserat på autentiseringsinformation
     public String generateJwt(Authentication auth){
 
         Instant now = Instant.now();
 
+        // Sammanställer behörigheter från autentiseringen
         String scope = auth.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
 
+        // Skapar JWT-anspråksuppsättning med utgivare, utfärdad tidpunkt, ämne och behörigheter
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)
@@ -36,7 +39,7 @@ public class TokenService {
                 .claim("roles", scope)
                 .build();
 
+        // Kodar JWT med anspråksuppsättningen och returnerar tokenvärde
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
-
 }

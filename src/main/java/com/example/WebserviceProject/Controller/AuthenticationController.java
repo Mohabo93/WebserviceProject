@@ -12,14 +12,17 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 public class AuthenticationController {
 
+    // Automatiskt injicera en instans av AuthenticationService
     @Autowired
     private AuthenticationService authenticationService;
 
+    // Hanterar POST-förfrågningar för att registrera en ny användare
     @PostMapping("/register")
     public User registerUser(@RequestBody RegistrationDTO body) {
         return authenticationService.registerUser(body.getUsername(), body.getPassword());
     }
 
+    // Hanterar POST-förfrågningar för att logga in en ny användare
     @PostMapping("/login")
     public LoginResponseDTO loginUser(@RequestBody RegistrationDTO body) {
         return authenticationService.loginUser(body.getUsername(), body.getPassword());

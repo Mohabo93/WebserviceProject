@@ -12,37 +12,36 @@ public class Role implements GrantedAuthority {
     @Column(name="role_id")
     private Integer roleId;
 
-    // behörighet för rollen
+    // Behörighet för användaren
     private String authority;
 
+    // StandardConstructor
     public Role(){
         super();
     }
 
+    // Constructor med role-ID och behörighet som parameter
     public Role(String authority){
         this.authority = authority;
     }
-
     public Role(Integer roleId, String authority){
         this.roleId = roleId;
         this.authority = authority;
     }
 
-    // Metod från GrantedAuthority för att hämta rollens behörighet
+    // Metod från GrantedAuthority-gränssnittet som returnerar behörigheten för rollen
     @Override
     public String getAuthority() {
         return this.authority;
     }
 
-    //gett- och setter
+    // Getter & Setter för behörighet samt role-ID
     public void setAuthority(String authority){
         this.authority = authority;
     }
-
     public Integer getRoleId(){
         return this.roleId;
     }
-
     public void setRoleId(Integer roleId){
         this.roleId = roleId;
     }

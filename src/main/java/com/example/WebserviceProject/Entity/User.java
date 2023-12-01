@@ -28,10 +28,12 @@ public class User implements UserDetails {
     )
     private Set<Role> authorities;
 
+    // StandardConstructor
     public User() {
         super();
         authorities = new HashSet<>();
     }
+    //Constructor med User-ID, användarnamn, lösenord och roller som parameter
     public User(Integer userId, String username, String password, Set<Role> authorities) {
         super();
         this.userId = userId;
@@ -40,24 +42,20 @@ public class User implements UserDetails {
         this.authorities = authorities;
     }
 
-
+    // Getter & Setter för User-ID, roller, användarnamn samt lösenord
     public Integer getUserId() {
         return this.userId;
     }
-
     public void setId(Integer userId) {
         this.userId = userId;
     }
-
     public void setAuthorities(Set<Role> authorities) {
         this.authorities = authorities;
     }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.authorities;
     }
-
     @Override
     public String getUsername() {
         return this.username;
@@ -65,7 +63,6 @@ public class User implements UserDetails {
     public void setUsername(String username) {
         this.username = username;
     }
-
     @Override
     public String getPassword() {
         return this.password;
@@ -74,6 +71,7 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    // Överskridna metoder som alltid returnerar sant
     @Override
     public boolean isAccountNonExpired() {
         return true;

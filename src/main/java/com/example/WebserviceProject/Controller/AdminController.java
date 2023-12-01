@@ -16,39 +16,42 @@ import java.util.Optional;
 @CrossOrigin("*")
 public class AdminController {
 
+    // Automatiskt injicera en instans av UserService
     @Autowired
     private UserService userService;
 
-
+    // Hanterar PUT-förfrågningar för att uppdatera användaren baserat på ID
     @PutMapping("/{id}")
     public ResponseEntity<String> updatedUser(@PathVariable Long id, @RequestBody User updatedUser) {
         try {
             User updatedUserResult = userService.updateUser(id, updatedUser);
             if (updatedUserResult != null) {
-                return ResponseEntity.ok("Användaren har uppdaterats.");
+                return ResponseEntity.ok("User has been updated.");
             }else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Användaren hittades inte");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
             }
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
         }
     }
 
+    // Hanterar DELETE-förfrågningar för att ta bort användaren baserat på ID
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         try {
             boolean deleted = userService.deleteUser(id);
 
             if (deleted) {
-                return ResponseEntity.ok(String.format("Användaren med Id har %d har raderats.",  id));
+                return ResponseEntity.ok(String.format("User with ID %d has been deleted.",  id));
             } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("Användaren med ID %d finns inte.", id));
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("User with ID %d not found.", id));
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("ERROR: " + e.getMessage());
         }
     }
 
+    // Hanterar PUT-förfrågningar för att uppdatera Task baserat på ID
     @PutMapping("/task/{id}")
     public ResponseEntity <Task> updateTask(@PathVariable Long id, @RequestBody String updatedTask) {
         Optional<Task> existingTask = userService.getTaskById(id);
@@ -60,12 +63,13 @@ public class AdminController {
             return new ResponseEntity<>(updated, HttpStatus.OK);
         }else return ResponseEntity.notFound().build();
     }
+    // Hanterar DELETE-förfrågningar för att ta bort Task baserat på ID
     @DeleteMapping("/task/{id}")
     public ResponseEntity<String> deleteTask(@PathVariable Long id) {
         Optional <Task> deleteTask = userService.getTaskById(id);
         if (deleteTask.isPresent()){
             userService.deleteTask(id);
-            return new ResponseEntity<>("Task raderad", HttpStatus.OK);
-        } return new ResponseEntity<>("Task hittades inte", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Task deleted", HttpStatus.OK);
+        } return new ResponseEntity<>("Task not found", HttpStatus.BAD_REQUEST);
     }
 }
