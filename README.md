@@ -1,5 +1,5 @@
 ## WebserviceProject
-This project is a Spring Boot web service with database integration and sequrity features.
+This project is a Spring Boot web service with database integration and security features.
 ### Installation
 Follow these steps to install and run the project locally:
 ### 1. Prerequisites
